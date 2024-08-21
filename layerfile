@@ -6,8 +6,6 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash && \
 
 WORKDIR /src
 
-COPY package.json package-lock.json ./
-
 RUN pnpm install
 
 COPY . .
