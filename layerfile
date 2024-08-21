@@ -6,10 +6,11 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash && \
 
 WORKDIR /src
 
-RUN pnpm install
+
+RUN npm install
 
 COPY . .
 
-RUN pnpm run build
-RUN BACKGROUND pnpm run start:prod
+RUN npm run build
+RUN BACKGROUND npm run start:prod
 EXPOSE WEBSITE http://localhost:8000
