@@ -10,6 +10,6 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 3003
+EXPOSE WEBSITE http://localhost:8000
 
 CMD ["pnpm", "run", "start:prod"]
