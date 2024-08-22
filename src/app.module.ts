@@ -18,7 +18,7 @@ dotenv.config();
       password: process.env.POSTGRESQL_ADDON_PASSWORD,
       database: process.env.POSTGRESQL_ADDON_DB,
       entities: [User],
-      synchronize: true,
+      synchronize: false,
     }),
     AuthModule,
     UsersModule,
