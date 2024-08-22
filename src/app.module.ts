@@ -10,12 +10,12 @@ dotenv.config();
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: process.env.MYSQL_ADDON_HOST,
-      port: parseInt(process.env.MYSQL_ADDON_PORT, 10),
-      username: process.env.MYSQL_ADDON_USER,
-      password: process.env.MYSQL_ADDON_PASSWORD,
-      database: process.env.MYSQL_ADDON_DB,
+      type: 'postgres',
+      host: process.env.POSTGRESQL_ADDON_HOST,
+      port: parseInt(process.env.POSTGRESQL_ADDON_PORT, 10),
+      username: process.env.POSTGRESQL_ADDON_USER,
+      password: process.env.POSTGRESQL_ADDON_PASSWORD,
+      database: process.env.POSTGRESQL_ADDON_DB,
       entities: [User],
       synchronize: true,
     }),
