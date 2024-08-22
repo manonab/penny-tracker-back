@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { User } from './users/user.entity';
+import { HelloController } from './hello/hello.controller';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -22,5 +23,6 @@ dotenv.config();
     AuthModule,
     UsersModule,
   ],
+  controllers: [HelloController],
 })
 export class AppModule {}
