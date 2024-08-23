@@ -6,8 +6,8 @@ export class Init1724407967328 implements MigrationInterface {
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     this.logger.log('Up');
-    
-    // Check if the 'couple' table already exists
+
+    // Create 'couple' table if it does not exist
     const coupleTableExists = await queryRunner.query(`
       SELECT EXISTS (
         SELECT FROM information_schema.tables 
@@ -21,11 +21,11 @@ export class Init1724407967328 implements MigrationInterface {
         CREATE TABLE couple (
           id SERIAL PRIMARY KEY,
           name VARCHAR(255) NOT NULL
-        )
+        );
       `);
     }
 
-    // Check if the 'user' table already exists
+    // Create 'user' table if it does not exist
     const userTableExists = await queryRunner.query(`
       SELECT EXISTS (
         SELECT FROM information_schema.tables 
@@ -33,7 +33,7 @@ export class Init1724407967328 implements MigrationInterface {
         AND table_name = 'user'
       );
     `);
-    
+
     if (!userTableExists[0].exists) {
       await queryRunner.query(`
         CREATE TABLE "user" (
@@ -44,14 +44,62 @@ export class Init1724407967328 implements MigrationInterface {
           balance DECIMAL DEFAULT 0,
           couple_id INTEGER,
           FOREIGN KEY (couple_id) REFERENCES couple(id) ON DELETE SET NULL
-        )
+        );
+      `);
+    }
+
+    // Create 'deposit' table if it does not exist
+    const depositTableExists = await queryRunner.query(`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables 
+        WHERE table_schema = 'public' 
+        AND table_name = 'deposit'
+      );
+    `);
+
+    if (!depositTableExists[0].exists) {
+      await queryRunner.query(`
+        CREATE TABLE deposit (
+          id SERIAL PRIMARY KEY,
+          amount DECIMAL NOT NULL,
+          user_id INTEGER,
+          couple_id INTEGER,
+          FOREIGN KEY (user_id) REFERENCES "user"(id) ON DELETE CASCADE,
+          FOREIGN KEY (couple_id) REFERENCES couple(id) ON DELETE CASCADE
+        );
+      `);
+    }
+
+    // Create 'expense' table if it does not exist
+    const expenseTableExists = await queryRunner.query(`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables 
+        WHERE table_schema = 'public' 
+        AND table_name = 'expense'
+      );
+    `);
+
+    if (!expenseTableExists[0].exists) {
+      await queryRunner.query(`
+        CREATE TABLE expense (
+          id SERIAL PRIMARY KEY,
+          amount DECIMAL NOT NULL,
+          description TEXT,
+          user_id INTEGER,
+          couple_id INTEGER,
+          FOREIGN KEY (user_id) REFERENCES "user"(id) ON DELETE CASCADE,
+          FOREIGN KEY (couple_id) REFERENCES couple(id) ON DELETE CASCADE
+        );
       `);
     }
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     this.logger.log('Down');
-    // Add logic to revert migration if necessary
-    // For example, drop tables or remove specific data
+
+    await queryRunner.query(`DROP TABLE IF EXISTS expense`);
+    await queryRunner.query(`DROP TABLE IF EXISTS deposit`);
+    await queryRunner.query(`DROP TABLE IF EXISTS "user"`);
+    await queryRunner.query(`DROP TABLE IF EXISTS couple`);
   }
 }
