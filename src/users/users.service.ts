@@ -11,8 +11,10 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+
     @InjectRepository(Deposits)
     private readonly depositRepository: Repository<Deposits>,
+
     @InjectRepository(Expense)
     private readonly expenseRepository: Repository<Expense>,
   ) {}
