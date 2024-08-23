@@ -1,28 +1,26 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
-import { User } from './users/user.entity';
-import { HelloController } from './hello/hello.controller';
-import * as dotenv from 'dotenv';
 
-dotenv.config();
+import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './users/users.module';
+import { ExpenseModule } from './expenses/expenses.module';
+import { CoupleModule } from './couple/couple.module';
+import { AccountModule } from './account/account.module';
+import { AuthModule } from './auth/auth.module';
+import { DepositsModule } from './deposits/deposits.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.POSTGRESQL_ADDON_HOST,
-      port: parseInt(process.env.POSTGRESQL_ADDON_PORT, 10),
-      username: process.env.POSTGRESQL_ADDON_USER,
-      password: process.env.POSTGRESQL_ADDON_PASSWORD,
-      database: process.env.POSTGRESQL_ADDON_DB,
-      entities: [User],
-      synchronize: false,
-    }),
+    ConfigModule.forRoot({ isGlobal: true }),
+    UserModule,
+    ExpenseModule,
+    CoupleModule,
+    AccountModule,
     AuthModule,
-    UsersModule,
+    DepositsModule,
+    DatabaseModule,
   ],
-  controllers: [HelloController],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
