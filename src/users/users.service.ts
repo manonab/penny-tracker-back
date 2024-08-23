@@ -3,16 +3,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { CreateUserDto } from 'src/dto/create-user.dto';
-import { Deposit } from 'src/deposits/deposits.entity';
 import { Expense } from 'src/expenses/expense.entity';
+import { Deposits } from 'src/deposits/deposits.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    @InjectRepository(Deposit)
-    private readonly depositRepository: Repository<Deposit>,
+    @InjectRepository(Deposits)
+    private readonly depositRepository: Repository<Deposits>,
     @InjectRepository(Expense)
     private readonly expenseRepository: Repository<Expense>,
   ) {}
