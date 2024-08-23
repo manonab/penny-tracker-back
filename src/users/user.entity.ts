@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { Couple } from '../couple/couple.entity';
 import { Expense } from '../expenses/expense.entity';
-import { Deposit } from 'src/deposits/deposits.entity';
+import { Deposit } from '../deposits/deposits.entity';
 
 @Entity()
 export class User {
@@ -16,9 +16,6 @@ export class User {
 
   @Column({ type: 'varchar', length: 255, unique: true })
   username: string;
-
-  @Column({ type: 'varchar', length: 255, unique: true })
-  email: string;
 
   @Column({ type: 'varchar', length: 255 })
   password: string;

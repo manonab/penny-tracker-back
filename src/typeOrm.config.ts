@@ -12,11 +12,14 @@ const configService = new ConfigService();
 
 export default new DataSource({
   type: 'postgres',
-  host: configService.getOrThrow('POSTGRESQL_ADDON_HOST'),
-  port: configService.getOrThrow('POSTGRESQL_ADDON_PORT'),
-  database: configService.getOrThrow('POSTGRESQL_ADDON_DB'),
-  username: configService.getOrThrow('POSTGRESQL_ADDON_USER'),
-  password: configService.getOrThrow('POSTGRESQL_ADDON_PASSWORD'),
+  url: configService.getOrThrow('RENDER_DB_URL'),
+  port: parseInt(configService.getOrThrow('RENDER_DB_PORT'), 10),
+  database: configService.getOrThrow('RENDER_DB'),
+  username: configService.getOrThrow('RENDER_DB_USERNAME'),
+  password: configService.getOrThrow('RENDER_DB_PASSWORD'),
   migrations: ['src/migrations/*.ts'],
   entities: [User, Expense, Couple, Deposit],
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });

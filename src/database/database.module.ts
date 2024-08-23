@@ -11,13 +11,16 @@ import { User } from 'src/users/user.entity';
     TypeOrmModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        host: configService.getOrThrow('POSTGRESQL_ADDON_HOST'),
-        port: configService.getOrThrow('POSTGRESQL_ADDON_PORT'),
-        database: configService.getOrThrow('POSTGRESQL_ADDON_DB'),
-        username: configService.getOrThrow('POSTGRESQL_ADDON_USER'),
-        password: configService.getOrThrow('POSTGRESQL_ADDON_PASSWORD'),
+        url: configService.getOrThrow('RENDER_DB_URL'),
+        port: parseInt(configService.getOrThrow('RENDER_DB_PORT'), 10),
+        database: configService.getOrThrow('RENDER_DB'),
+        username: configService.getOrThrow('RENDER_DB_USERNAME'),
+        password: configService.getOrThrow('RENDER_DB_PASSWORD'),
         migrations: ['migrations/**'],
         entities: [User, Expense, Couple, Deposit],
+        ssl: {
+          rejectUnauthorized: false,
+        },
       }),
       inject: [ConfigService],
     }),
