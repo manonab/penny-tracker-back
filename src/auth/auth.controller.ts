@@ -20,7 +20,9 @@ export class AuthController {
     return this.authService.createUser(createUserDto);
   }
   @Post('login')
-  async login(@Body() loginDto: LoginDto): Promise<{ accessToken: string }> {
+  async login(
+    @Body() loginDto: LoginDto,
+  ): Promise<{ accessToken: string; user_id: number }> {
     return this.authService.login(loginDto);
   }
 }
