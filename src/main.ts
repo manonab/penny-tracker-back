@@ -3,11 +3,15 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(3003);
   app.enableCors({
-    origin: true,
+    origin: [
+      'http://localhost:3000',
+      'https://penny-tracker-back.onrender.com',
+    ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   });
+  await app.listen(3003);
 }
 bootstrap();
