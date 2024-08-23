@@ -6,7 +6,7 @@ import { ExpenseModule } from './expenses/expenses.module';
 import { CoupleModule } from './couple/couple.module';
 import { AccountModule } from './account/account.module';
 import { AuthModule } from './auth/auth.module';
-import { DepositsModule } from './deposits/deposits.module';
+import { DepositModule } from './deposits/deposits.module';
 import { DatabaseModule } from './database/database.module';
 
 @Module({
@@ -17,7 +17,7 @@ import { DatabaseModule } from './database/database.module';
     CoupleModule,
     AccountModule,
     AuthModule,
-    DepositsModule,
+    DepositModule,
     DatabaseModule,
   ],
   controllers: [],

@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { User } from '../users/user.entity';
 import { Expense } from '../expenses/expense.entity';
-import { Deposits } from '../deposits/deposits.entity';
+import { Deposit } from '../deposits/deposits.entity';
 
 @Entity()
 export class Couple {
@@ -17,6 +17,6 @@ export class Couple {
   @OneToMany(() => Expense, (expense) => expense.couple)
   expenses: Expense[];
 
-  @OneToMany(() => Deposits, (deposit) => deposit.couple)
-  deposits: Deposits[];
+  @OneToMany(() => Deposit, (deposit) => deposit.couple)
+  deposits: Deposit[];
 }

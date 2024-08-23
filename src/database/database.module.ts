@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Couple } from 'src/couple/couple.entity';
-import { Deposits } from 'src/deposits/deposits.entity';
+import { Deposit } from 'src/deposits/deposits.entity';
 import { Expense } from 'src/expenses/expense.entity';
 import { User } from 'src/users/user.entity';
 
@@ -17,7 +17,7 @@ import { User } from 'src/users/user.entity';
         username: configService.getOrThrow('POSTGRESQL_ADDON_USER'),
         password: configService.getOrThrow('POSTGRESQL_ADDON_PASSWORD'),
         migrations: ['migrations/**'],
-        entities: [User, Expense, Couple, Deposits],
+        entities: [User, Expense, Couple, Deposit],
       }),
       inject: [ConfigService],
     }),

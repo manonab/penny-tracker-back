@@ -4,7 +4,7 @@ import { DataSource } from 'typeorm';
 import { User } from './users/user.entity';
 import { Expense } from './expenses/expense.entity';
 import { Couple } from './couple/couple.entity';
-import { Deposits } from './deposits/deposits.entity';
+import { Deposit } from './deposits/deposits.entity';
 
 config();
 
@@ -18,5 +18,5 @@ export default new DataSource({
   username: configService.getOrThrow('POSTGRESQL_ADDON_USER'),
   password: configService.getOrThrow('POSTGRESQL_ADDON_PASSWORD'),
   migrations: ['src/migrations/*.ts'],
-  entities: [User, Expense, Couple, Deposits],
+  entities: [User, Expense, Couple, Deposit],
 });

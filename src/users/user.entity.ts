@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { Couple } from '../couple/couple.entity';
 import { Expense } from '../expenses/expense.entity';
-import { Deposits } from '../deposits/deposits.entity';
+import { Deposit } from 'src/deposits/deposits.entity';
 
 @Entity()
 export class User {
@@ -32,6 +32,6 @@ export class User {
   @OneToMany(() => Expense, (expense) => expense.user)
   expenses: Expense[];
 
-  @OneToMany(() => Deposits, (deposit) => deposit.user)
-  deposits: Deposits[];
+  @OneToMany(() => Deposit, (deposit) => deposit.user)
+  deposits: Deposit[];
 }

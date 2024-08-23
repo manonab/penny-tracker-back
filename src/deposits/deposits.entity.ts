@@ -3,7 +3,7 @@ import { User } from '../users/user.entity';
 import { Couple } from '../couple/couple.entity';
 
 @Entity()
-export class Deposits {
+export class Deposit {
   @PrimaryGeneratedColumn()
   id: number;
 
