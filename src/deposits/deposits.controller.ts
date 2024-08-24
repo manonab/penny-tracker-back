@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Param, Body } from '@nestjs/common';
+import { Controller, Post, Get, Param, Body, Put } from '@nestjs/common';
 import { Deposit } from './deposits.entity';
 import { DepositService } from './deposits.service';
 
@@ -23,5 +23,14 @@ export class DepositController {
   @Get(':id')
   async getDepositById(@Param('id') id: number): Promise<Deposit> {
     return this.depositService.findDepositById(id);
+  }
+  @Put(':id')
+  async updateDeposit(
+    @Param('id') id: number,
+    @Body('amount') amount?: number,
+    @Body('userId') userId?: number,
+    @Body('coupleId') coupleId?: number,
+  ): Promise<Deposit> {
+    return this.depositService.updateDeposit(id, amount, userId, coupleId);
   }
 }

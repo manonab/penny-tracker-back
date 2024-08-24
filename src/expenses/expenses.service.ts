@@ -30,6 +30,10 @@ export class ExpensesService {
   }
 
   async remove(id: number): Promise<void> {
-    await this.expenseRepository.delete(id);
+    const result = await this.expenseRepository.delete(id);
+
+    if (result.affected === 0) {
+      throw new Error('Expense not found');
+    }
   }
 }

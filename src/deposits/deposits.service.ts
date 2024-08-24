@@ -55,4 +55,43 @@ export class DepositService {
   async findDepositById(id: number): Promise<Deposit> {
     return this.depositRepository.findOneBy({ id });
   }
+  async updateDeposit(
+    id: number,
+    amount?: number,
+    userId?: number,
+    coupleId?: number,
+  ): Promise<Deposit> {
+    const deposit = await this.depositRepository.findOneBy({ id });
+
+    if (!deposit) {
+      throw new Error('Deposit not found');
+    }
+
+    if (amount !== undefined) {
+      if (typeof amount !== 'number' || isNaN(amount)) {
+        throw new Error('Invalid amount');
+      }
+      deposit.amount = amount;
+    }
+
+    if (userId !== undefined) {
+      const user = await this.userRepository.findOneBy({ id: userId });
+      if (!user) {
+        throw new Error('User not found');
+      }
+      deposit.user = user;
+    }
+
+    if (coupleId !== undefined) {
+      const couple = await this.coupleRepository.findOneBy({ id: coupleId });
+      if (!couple) {
+        throw new Error('Couple not found');
+      }
+      deposit.couple = couple;
+    }
+
+    await this.depositRepository.save(deposit);
+
+    return deposit;
+  }
 }
