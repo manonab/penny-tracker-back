@@ -16,6 +16,11 @@ export class AccountController {
     return this.accountService.addDeposit(userId, amount, coupleId);
   }
 
+  @Get('general-balance')
+  async getGeneralBalance(): Promise<number> {
+    return this.accountService.getGeneralBalance();
+  }
+
   @Post('expense')
   async addExpense(
     @Body('userId') userId: number,

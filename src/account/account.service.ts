@@ -42,7 +42,6 @@ export class AccountService {
     return this.depositRepository.save(deposit);
   }
 
-  // Ajouter une dépense
   async addExpense(
     userId: number,
     amount: number,
@@ -63,7 +62,6 @@ export class AccountService {
     return this.expenseRepository.save(expense);
   }
 
-  // Obtenir le solde d'un utilisateur
   async getBalance(userId: number): Promise<number> {
     const depositResult = await this.depositRepository
       .createQueryBuilder('deposit')
@@ -89,5 +87,22 @@ export class AccountService {
 
   async getAllExpenses(): Promise<Expense[]> {
     return this.expenseRepository.find();
+  }
+
+  async getGeneralBalance(): Promise<number> {
+    const depositsResult = await this.depositRepository
+      .createQueryBuilder('deposit')
+      .select('SUM(deposit.amount)', 'total')
+      .getRawOne();
+
+    const expensesResult = await this.expenseRepository
+      .createQueryBuilder('expense')
+      .select('SUM(expense.amount)', 'total')
+      .getRawOne();
+
+    const totalDeposits = parseFloat(depositsResult.total) || 0;
+    const totalExpenses = parseFloat(expensesResult.total) || 0;
+
+    return totalDeposits - totalExpenses;
   }
 }

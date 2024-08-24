@@ -31,6 +31,11 @@ export class ExpensesController {
     return this.expensesService.findOne(id);
   }
 
+  @Get('user/:userId')
+  findByUser(@Param('userId') userId: number): Promise<Expense[]> {
+    return this.expensesService.findByUser(userId);
+  }
+
   @Put(':id')
   update(
     @Param('id') id: number,

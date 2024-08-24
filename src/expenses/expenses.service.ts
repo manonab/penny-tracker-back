@@ -22,6 +22,10 @@ export class ExpensesService {
     return this.expenseRepository.find();
   }
 
+  async findByUser(userId: number): Promise<Expense[]> {
+    return this.expenseRepository.find({ where: { user: { id: userId } } });
+  }
+
   findOne(id: number): Promise<Expense> {
     return this.expenseRepository.findOneBy({ id });
   }
