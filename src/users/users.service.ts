@@ -5,6 +5,7 @@ import { User } from './user.entity';
 import { CreateUserDto } from 'src/dto/create-user.dto';
 import { Expense } from 'src/expenses/expense.entity';
 import { Deposit } from 'src/deposits/deposits.entity';
+import { Couple } from 'src/couple/couple.entity';
 
 @Injectable()
 export class UserService {
@@ -17,6 +18,9 @@ export class UserService {
 
     @InjectRepository(Expense)
     private readonly expenseRepository: Repository<Expense>,
+
+    @InjectRepository(Couple)
+    private readonly coupleRepository: Repository<Couple>,
   ) {}
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
@@ -64,5 +68,20 @@ export class UserService {
     );
 
     return totalDeposits - totalExpenses;
+  }
+  async associateUserToCouple(userId: number, coupleId: number): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['couple'],
+    });
+
+    const couple = await this.coupleRepository.findOneBy({ id: coupleId });
+
+    if (!user || !couple) {
+      throw new Error('User or Couple not found');
+    }
+
+    user.couple = couple;
+    return this.userRepository.save(user);
   }
 }

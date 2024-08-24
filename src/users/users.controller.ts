@@ -43,4 +43,11 @@ export class UserController {
   async removeUser(@Param('id') id: number): Promise<void> {
     return this.userService.removeUser(id);
   }
+  @Post(':id/associate')
+  async associateUserToCouple(
+    @Param('id') userId: number,
+    @Body() { coupleId }: { coupleId: number },
+  ): Promise<User> {
+    return this.userService.associateUserToCouple(userId, coupleId);
+  }
 }
