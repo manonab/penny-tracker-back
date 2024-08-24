@@ -23,21 +23,29 @@ export class DepositService {
     userId: number,
     coupleId?: number,
   ): Promise<Deposit> {
-    const user = userId
-      ? await this.userRepository.findOneBy({ id: userId })
-      : null;
+    console.log('Received userId:', userId);
+    const user = await this.userRepository.findOneBy({ id: userId });
 
     const couple = coupleId
       ? await this.coupleRepository.findOneBy({ id: coupleId })
       : null;
 
-    const deposit = this.depositRepository.create({
-      amount,
-      user,
-      couple,
-    });
+    if (!user) {
+      throw new Error('User not found');
+    }
 
-    return this.depositRepository.save(deposit);
+    if (typeof amount !== 'number' || isNaN(amount)) {
+      throw new Error('Invalid amount');
+    }
+
+    const deposit = new Deposit();
+    deposit.amount = amount;
+    deposit.user = user;
+    deposit.couple = couple;
+
+    await this.depositRepository.save(deposit);
+
+    return deposit;
   }
 
   async findAllDeposits(): Promise<Deposit[]> {

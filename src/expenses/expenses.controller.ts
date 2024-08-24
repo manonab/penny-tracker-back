@@ -1,15 +1,6 @@
-import {
-  Controller,
-  Post,
-  Body,
-  Get,
-  Param,
-  Put,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Delete } from '@nestjs/common';
 import { ExpensesService } from './expenses.service';
 import { Expense } from './expense.entity';
-import { UpdateExpenseDto } from 'src/dto/update-expense.dto';
 import { CreateExpenseDto } from 'src/dto/create-expense.dto';
 
 @Controller('expenses')
@@ -34,14 +25,6 @@ export class ExpensesController {
   @Get('user/:userId')
   findByUser(@Param('userId') userId: number): Promise<Expense[]> {
     return this.expensesService.findByUser(userId);
-  }
-
-  @Put(':id')
-  update(
-    @Param('id') id: number,
-    @Body() updateExpenseDto: UpdateExpenseDto,
-  ): Promise<Expense> {
-    return this.expensesService.update(id, updateExpenseDto);
   }
 
   @Delete(':id')

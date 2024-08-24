@@ -8,4 +8,12 @@ export class UpdateExpenseDto {
   @IsOptional()
   @IsNumber()
   amount?: number;
+
+  @IsOptional()
+  @IsNumber()
+  userId?: number;
+
+  @IsOptional()
+  @IsNumber()
+  coupleId?: number;
 }
